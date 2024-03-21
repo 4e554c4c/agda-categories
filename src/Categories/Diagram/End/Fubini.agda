@@ -1,4 +1,4 @@
-{-# OPTIONS --without-K #-}
+{-# OPTIONS --without-K --allow-unsolved-metas #-}
 
 open import Level
 open import Data.Product using (Σ; _,_)
@@ -38,10 +38,9 @@ module D = Category D
 module F = Functor F
 
 private
+  -- just shuffling arguments
   F′ : Bifunctor (C.op ×ᶜ C) (D.op ×ᶜ D) E
   F′ = F ∘F ((πˡ ∘F πˡ ※ πˡ ∘F πʳ) ※ (πʳ ∘F πˡ ※ πʳ ∘F πʳ))
-
-foo = (∫ (F′ ♯))
 
 module _ {eₚ : ∫ F} {eᵢ₁ : ∫ (F′ ♯)} {eᵢ : ∫ (∫.E eᵢ₁)} where
   open M E
