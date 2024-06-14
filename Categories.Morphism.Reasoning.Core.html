@@ -287,37 +287,4 @@
   <a id="8452" href="Categories.Morphism.Reasoning.Core.html#8428" class="Bound">f</a> <a id="8454" href="Categories.Category.Core.html#656" class="Field Operator">∘</a> <a id="8456" href="Categories.Morphism.Reasoning.Core.html#8436" class="Bound">g</a>           <a id="8468" href="Relation.Binary.Reasoning.Syntax.html#7049" class="Function">≈⟨</a> <a id="8471" href="Categories.Morphism.Reasoning.Core.html#2899" class="Function">introʳ</a> <a id="8478" href="Categories.Morphism.Reasoning.Core.html#8439" class="Bound">eq</a> <a id="8481" href="Relation.Binary.Reasoning.Syntax.html#7049" class="Function">⟩</a>
   <a id="8485" class="Symbol">(</a><a id="8486" href="Categories.Morphism.Reasoning.Core.html#8428" class="Bound">f</a> <a id="8488" href="Categories.Category.Core.html#656" class="Field Operator">∘</a> <a id="8490" href="Categories.Morphism.Reasoning.Core.html#8436" class="Bound">g</a><a id="8491" class="Symbol">)</a> <a id="8493" href="Categories.Category.Core.html#656" class="Field Operator">∘</a> <a id="8495" href="Categories.Morphism.Reasoning.Core.html#8412" class="Bound">a</a> <a id="8497" href="Categories.Category.Core.html#656" class="Field Operator">∘</a> <a id="8499" href="Categories.Morphism.Reasoning.Core.html#8420" class="Bound">b</a> <a id="8501" href="Relation.Binary.Reasoning.Syntax.html#7049" class="Function">≈⟨</a> <a id="8504" href="Categories.Morphism.Reasoning.Core.html#1914" class="Function">pullʳ</a> <a id="8510" href="Categories.Category.Core.html#1004" class="Field">sym-assoc</a> <a id="8520" href="Relation.Binary.Reasoning.Syntax.html#7049" class="Function">⟩</a>
   <a id="8524" href="Categories.Morphism.Reasoning.Core.html#8428" class="Bound">f</a> <a id="8526" href="Categories.Category.Core.html#656" class="Field Operator">∘</a> <a id="8528" class="Symbol">(</a><a id="8529" href="Categories.Morphism.Reasoning.Core.html#8436" class="Bound">g</a> <a id="8531" href="Categories.Category.Core.html#656" class="Field Operator">∘</a> <a id="8533" href="Categories.Morphism.Reasoning.Core.html#8412" class="Bound">a</a><a id="8534" class="Symbol">)</a> <a id="8536" href="Categories.Category.Core.html#656" class="Field Operator">∘</a> <a id="8538" href="Categories.Morphism.Reasoning.Core.html#8420" class="Bound">b</a> <a id="8540" href="Relation.Binary.Reasoning.Syntax.html#12283" class="Function Operator">∎</a>
-<a id="8542" class="Comment">{-
---     b-----α-----c
---     │╲   ╱ ╲   ╱│
---     │ ╲ ╱   ╲ ╱ │
---     │  ╳     ╳  │
---     │ ╱ ╲   ╱ ╲ │
---     │╱   ╲ ╱   ╲│
---     β     d     γ
---      ╲    │    ╱
---       ╲   │   ╱
---        ╲  │  ╱
---         ╲ │ ╱
---          ╲│╱
---           δ
-module Cube {a b c d α β δ γ : Obj}
-  {ab : a ⇒ b} {ac : a ⇒ c} {aα : a ⇒ α}
-  {cd : c ⇒ d} {cγ : c ⇒ γ}
-  {bd : b ⇒ d} {bβ : b ⇒ β}
-  {αβ : α ⇒ β} {αγ : α ⇒ γ}
-  {dδ : d ⇒ δ} {βδ : β ⇒ δ} {γδ : γ ⇒ δ} where
-  private
-    front  = CommutativeSquare ab aα bβ αβ
-    back   = CommutativeSquare cd cγ dδ γδ
-    top    = CommutativeSquare ab ac bd cd
-    bottom = CommutativeSquare αβ αγ βδ γδ
-    left   = CommutativeSquare ac aα cγ αγ
-    right  = CommutativeSquare bd bβ dδ βδ
-
-  fill-back : top → bottom → left → right → front → back
-  fill-back t bt l r f = {! !}
-  fill-front : top → bottom → left → right → back → front
-  fill-front t bt l r b = {! !}
--}</a>
 </pre></body></html>
