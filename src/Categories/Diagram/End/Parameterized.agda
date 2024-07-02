@@ -61,23 +61,32 @@ module _ (F : Functor (P ×ᶜ ((Category.op C) ×ᶜ C)) D) {ω : ∀ X → ∫
   open ∫ hiding (E)
   open NT using (η)
 
+  open Functor
   EndF : Functor P D
-  EndF = record
-    { F₀           = λ X → ω.E X
-    ; F₁           = λ {X} {Y} f → end-η (curry.₀.₁ F f) ⦃ ω X ⦄ ⦃ ω Y ⦄
-    ; identity     = λ {A} → begin
-      end-η (curry.₀.₁ F P.id) ⦃ ω A ⦄ ⦃ ω A ⦄ ≈⟨ end-η-resp-≈ ⦃ ω A ⦄ ⦃ ω A ⦄ (curry.₀.identity F) ⟩
-      end-η idN ⦃ ω A ⦄ ⦃ ω A ⦄                ≈⟨ end-identity ⦃ ω A ⦄ ⟩
-      id                                       ∎
-    ; homomorphism = λ {A B C} {f g} → begin
-      end-η (curry.₀.₁ F (P [ g ∘ f ])) ⦃ ω A ⦄ ⦃ ω C ⦄ 
-        ≈⟨ end-η-resp-≈ ⦃ ω A ⦄ ⦃ ω C ⦄ (curry.₀.homomorphism F) ⟩
-      end-η (curry.₀.₁ F g ∘ᵥ curry.₀.₁ F f ) ⦃ ω A ⦄ ⦃ ω C ⦄
-        ≈⟨  end-η-resp-∘ (curry.₀.₁ F f) (curry.₀.₁ F g) ⦃ ω A ⦄ ⦃ ω B ⦄ ⦃ ω C ⦄ ⟩
-      end-η (curry.₀.₁ F g) ⦃ ω B ⦄ ⦃ ω C ⦄ ∘ end-η (curry.₀.₁ F f) ⦃ ω A ⦄ ⦃ ω B ⦄
-        ∎
-    ; F-resp-≈     = λ {A B f g} eq → end-η-resp-≈ ⦃ ω A ⦄ ⦃ ω B ⦄ (curry.₀.F-resp-≈ F eq)
-    }
+  EndF .F₀ X = ω.E X
+  EndF .F₁ {X} {Y} f = end-η (curry.₀.₁ F f) ⦃ ω X ⦄ ⦃ ω Y ⦄
+  EndF .identity = go
+    where opaque
+      go : ∀ {A} → D [ EndF .F₁ (P.id {A}) ≈ id ]
+      go {A} = begin
+        end-η (curry.₀.₁ F P.id) ⦃ ω A ⦄ ⦃ ω A ⦄ ≈⟨ end-η-resp-≈ ⦃ ω A ⦄ ⦃ ω A ⦄ (curry.₀.identity F) ⟩
+        end-η idN ⦃ ω A ⦄ ⦃ ω A ⦄                ≈⟨ end-identity ⦃ ω A ⦄ ⟩
+        id                                       ∎
+  EndF .homomorphism = go
+    where opaque
+      go : ∀ {X Y Z} {f : P [ X , Y ]} {g : P [ Y , Z ]} →
+           D [ EndF .F₁ (P [ g ∘ f ]) ≈ D [ EndF .F₁ g ∘ EndF .F₁ f ] ]
+      go {A} {B} {C} {f} {g} = begin
+        end-η (curry.₀.₁ F (P [ g ∘ f ])) ⦃ ω A ⦄ ⦃ ω C ⦄ 
+          ≈⟨ end-η-resp-≈ ⦃ ω A ⦄ ⦃ ω C ⦄ (curry.₀.homomorphism F) ⟩
+        end-η (curry.₀.₁ F g ∘ᵥ curry.₀.₁ F f ) ⦃ ω A ⦄ ⦃ ω C ⦄
+          ≈⟨  end-η-resp-∘ (curry.₀.₁ F f) (curry.₀.₁ F g) ⦃ ω A ⦄ ⦃ ω B ⦄ ⦃ ω C ⦄ ⟩
+        end-η (curry.₀.₁ F g) ⦃ ω B ⦄ ⦃ ω C ⦄ ∘ end-η (curry.₀.₁ F f) ⦃ ω A ⦄ ⦃ ω B ⦄
+          ∎
+  EndF .F-resp-≈ = go
+    where opaque
+      go : ∀ {A B} {f g : P [ A , B ]} → P [ f ≈ g ] → D [ EndF .F₁ f ≈ EndF .F₁ g ]
+      go {A} {B} eq = end-η-resp-≈ ⦃ ω A ⦄ ⦃ ω B ⦄ (curry.₀.F-resp-≈ F eq)
 
 
   -- The parameter theorem
